@@ -1,0 +1,34 @@
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasse</title>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/tools.js"></script>
+    <script type="text/javascript" src="js/cashpoint.js"></script>
+
+    <link rel="stylesheet" href="css/main.css">
+</head>
+
+<body onload="init_page()">
+
+    <div id="div_select_cashpoint">
+
+        <!-- Select cashpoint -->
+        <select onchange="initialize_cashpoint()" id="input_select_cashpoint_id">
+            <option value="" selected hidden disabled>Kasse wählen</option>
+            <option>1</option>
+            <option>2</option>
+        </select>
+
+    </div>
+
+    <div id="div_cashpoint_content">
+        <div id="div_cashpoint_content_products" class="div_cashpoint_content_products"></div>
+        <div id="div_cashpoint_content_orderlist" class="div_cashpoint_content_orderlist"><h1>Bestellung</h1></div>
+    </div>
+
+</body>
+
+</html>

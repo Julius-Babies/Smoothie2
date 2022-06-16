@@ -1,0 +1,79 @@
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.div_cashpoint_content_products {
+    display: inline-block;
+    width: 75%;
+    height: available;
+    vertical-align: top;
+    padding: 3pt;
+}
+
+.div_cashpoint_content_orderlist {
+    display: inline-block;
+    width: 20%;
+    height: available;
+    vertical-align: top;
+    padding: 3pt;
+}
+
+.product_button {
+    overflow: hidden;
+    display: inline-block;
+    width: 150pt;
+    height: 150pt;
+    margin: 3pt;
+    border: 1pt solid white;
+    border-radius: 20pt;
+    background: orange;
+    color: white;
+    font-size: 20pt;
+    padding-top: 5pt
+}
+
+.product_button * {
+    
+    padding: 10pt, 0;
+    display: block;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.product_button .remove {
+    width: available;
+    padding: 0;
+    bottom: 0;
+}
+
+.product_button .remove span {
+    width: available;
+    display: block;
+}
+
+.product_button .remove span:hover {
+    background: #fff;
+}
+
+.order_button {
+    display: inline-block;
+    width: 40%;
+    height: 40pt;
+    border-radius: 5pt;
+    text-align: center;
+    vertical-align: middle;
+    background: green;
+    color: #ffffff; 
+}
+
+.clear_order {
+    display: inline-block;
+    width: 40%;
+    height: 40pt;
+    border-radius: 5pt;
+    text-align: center;
+    vertical-align: middle;
+    background: red;
+    color: #ffffff;
+}
