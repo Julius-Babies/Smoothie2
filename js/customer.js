@@ -7,7 +7,7 @@ function init_page() {
 function updateHeader() {
     setTimeout(function () {
         let currentDate = new Date();
-        document.getElementById("header").innerText = "Kasse " + getCookie("cashpoint_customer") + " • " + currentDate.getDate() + "." + addLeadingZeros((currentDate.getMonth() + 1), 2) + "." + currentDate.getFullYear() + " • " + addLeadingZeros(currentDate.getHours(), 2) + ":" + addLeadingZeros(currentDate.getMinutes(), 2) + ":" + addLeadingZeros(currentDate.getSeconds(), 2);
+        document.getElementById("header").innerText = "Kasse " + getCookie("cashpoint_customer") + " • " + currentDate.getDate() + "." + addLeadingZeros((currentDate.getMonth() + 1), 2) + "." + currentDate.getFullYear() + " • " + addLeadingZeros(currentDate.getHours(), 2) + ":" + addLeadingZeros(currentDate.getMinutes(), 2);
         updateHeader();
     }, 1000);
 }
