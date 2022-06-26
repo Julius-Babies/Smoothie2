@@ -1,0 +1,114 @@
+:root {
+    --screen-width: 1080pt;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+}
+
+.background {
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    filter: brightness(30%);
+    overflow: hidden;
+}
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    font-family: Monospaced, monospace;
+}
+.content * {
+    color: white;
+}
+
+table[id=table_ids] {
+    width: 1080px;
+    border-collapse: collapse;
+    table-layout: fixed;
+    display: block;
+    max-height: 66%;
+}
+
+th:first-of-type {
+    width: calc(1080px * (2/3));
+}
+
+th:nth-of-type(2) {
+    width: calc(1080px * (1/3));
+}
+
+table[id=table_ids] tr {
+    height: 50pt;
+}
+
+table[id=table_ids] span {
+    min-width: 30%;
+    margin: 5%;
+    font-size: 150px;
+    display: inline-block;
+    padding: 3%;
+    text-align: center;
+    border-radius: 5pt;
+}
+
+table[id=table_ids] tr td:first-child span {
+    border: 1pt solid red;
+}
+
+table[id=table_ids] tr td:nth-child(2) span {
+    border: 1pt solid green;
+    width: 65%
+}
+
+table[id=table_ids] tr:nth-child(2) td:nth-child(2) span {
+    border: 5pt solid green;
+    width: 65%
+}
+
+.ads {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    max-height: 33%;
+    height: fit-content;
+}
+
+.ads > div[id=ads\.products], .ads > div[id=ads\.ads] {
+    width: 47%;
+    margin: 1%;
+    display: inline-block;
+}
+
+table[id=table_products] {
+    border-collapse: collapse;
+    font-size: 28px
+}
+
+table[id=table_products] tr {
+    height: 30pt;
+    transition: 0.2s;
+}
+
+table[id=table_products] tr td {
+    border-bottom: 1pt #ffffff solid;
+    padding-right: 5pt
+
+}
+
+.not-available * {
+    color: gray;
+}
+
+.selected {
+    height: 40pt !important;
+}
+
+.selected td:first-child {
+    padding-left: 15pt;
+}

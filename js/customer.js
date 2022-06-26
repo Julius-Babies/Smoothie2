@@ -1,4 +1,4 @@
-function init_page() {
+function initPage() {
     // show cashpoint selector
     document.getElementById("div_select_cashpoint").style.display = "block";
     document.getElementById("div_cashpoint_content").style.display = "none";
@@ -29,10 +29,28 @@ function initialize_cashpoint() {
 
 function update() {
     setTimeout(function () {
+        let message = query(`SELECT *
+                             FROM smoothie2.customer_info
+                             WHERE cashpoint = ${getCookie("cashpoint_customer")}`, "id;type;message");
+        if (message !== "EMPTY") {
+            query("DELETE FROM smoothie2.customer_info WHERE id = " + message.split(";")[0], "");
+            if (message.split(";")[1] === "-1") {
+                document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "0";
+            } else {
+                message = message.split(";");
+                document.getElementById("div_cashpoint_customer_info").innerHTML = message[2];
+                document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "1";
+            }
+            update();
+            return;
+        }
+
+        let content_before = document.getElementById("content").innerHTML;
         const orderlist = query(`SELECT *
                                  FROM smoothie2.live_orders
                                           INNER JOIN smoothie2.products ON live_orders.product_id = products.id
-                                 WHERE cashpoint = ${getCookie("cashpoint_customer")}`, "name;amount;price").split("\n");
+                                 WHERE cashpoint = ${getCookie("cashpoint_customer")}
+                                   AND amount > 0`, "name;amount;price").split("\n");
         let total = 0;
         let cups = 0;
         let html = "<table class='live_order'><tr><th id='header_name'>Name</th><th id='header_amount'>Anzahl</th><th id='header_temp_total'>Zwischensumme</th></tr>";
@@ -47,15 +65,22 @@ function update() {
                 html = `${html}<tr><td>${item[0]}</td><td class="amount">${item[1]}</td><td>${full_price} €</td></tr>`
             }
         });
-        html = `${html}<tr style="border-top: 3pt double #ffffff"><td>Pfand</td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`
+        if (total)
+            html = `${html}<tr style="border-top: 3pt double #ffffff"><td>Pfand (1€ pro Becher) </td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`
+        html = html + "<tr class='invisible_row'><td></td><td></td><td></td></tr>"
         html = html + "</table>";
         if (orderlist.length === 1) { // Element 0 is always "EMPTY" or the first value
             document.getElementById("footer").innerHTML = "Herzlich willkommen!";
             document.getElementById("content").innerHTML = "";
         } else {
             document.getElementById("content").innerHTML = html;
-            document.getElementById("footer").innerHTML = "Gesamt: " + (total / 100).toFixed(2) + " € (zzgl. " + cups + " € Pfand)";
+            if (content_before !== document.getElementById("content").innerHTML) {
+                document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
+            }
+            document.getElementById("footer").innerHTML = "Gesamt: " + ((total / 100)+cups).toFixed(2) + " €";
         }
-        update()
+
+        update();
+
     }, 250);
 }

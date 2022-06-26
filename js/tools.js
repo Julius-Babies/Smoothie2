@@ -14,15 +14,16 @@ function getCookie(cname) {
     return "";
 }
 
-function setCookie(cname, cvalue, exdays) {
+function setCookie(name, value, expire_days) {
   const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  d.setTime(d.getTime() + (expire_days*24*60*60*1000));
   let expires = "expires="+ d.toUTCString();
-  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
 function query(query, data) {
     let serverdata = "";
+    // noinspection JSUnresolvedVariable
     $.ajax({
         url: "./querymaster.php",
         method: "GET",
@@ -35,7 +36,6 @@ function query(query, data) {
         },
         success: function (response) {
             serverdata = response;
-            console.log(response);
         }
     });
     return serverdata;

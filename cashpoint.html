@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body onload="init_page()">
+<body onload="initPage()">
+
+    <div class="screen_lock" id="screen_lock"><div>Bestellen...</div></div>
 
     <div id="div_select_cashpoint">
 
         <!-- Select cashpoint -->
-        <select onchange="initialize_cashpoint()" id="input_select_cashpoint_id">
+        <label for="input_select_cashpoint_id">Kasse</label><select onchange="initCashpoint()" id="input_select_cashpoint_id">
             <option value="" selected hidden disabled>Kasse wählen</option>
             <option>1</option>
             <option>2</option>
@@ -24,9 +26,49 @@
 
     </div>
 
+    <div id="div_cashpoint_content_payment_background"></div>
+
     <div id="div_cashpoint_content">
         <div id="div_cashpoint_content_products" class="div_cashpoint_content_products"></div>
         <div id="div_cashpoint_content_orderlist" class="div_cashpoint_content_orderlist"><h1>Bestellung</h1></div>
+        <div id="div_cashpoint_content_payment" class="div_cashpoint_content_payment">
+
+            <div id="payment_given"></div>
+
+            <table>
+                <tr>
+                    <td class="payment_number_button" onclick="updateGiven('7')">7</td>
+                    <td  class="payment_number_button"  onclick="updateGiven('8')">8</td>
+                    <td  class="payment_number_button"  onclick="updateGiven('9')">9</td>
+                    <td rowspan="7" style="vertical-align: top; padding-left: 10pt">
+                        <h1>Bestellungsdetails</h1>
+                        <p>Summe mit Pfand: <span class="div_cashpoint_content_payment_info_sum"></span></p>
+                        <p>Rückgeld: <span class="div_cashpoint_content_payment_info_change"></span></p>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="payment_number_button" onclick="updateGiven('4')">4</td>
+                    <td class="payment_number_button" onclick="updateGiven('5')">5</td>
+                    <td class="payment_number_button" onclick="updateGiven('6')">6</td>
+                </tr>
+                <tr>
+                    <td class="payment_number_button" onclick="updateGiven('1')">1</td>
+                    <td class="payment_number_button" onclick="updateGiven('2')">2</td>
+                    <td class="payment_number_button" onclick="updateGiven('3')">3</td>
+                </tr>
+                <tr>
+                    <td class="payment_number_button" onclick="updateGiven('0')">0</td>
+                    <td class="payment_number_button" onclick="updateGiven('.')">,</td>
+                    <td class="payment_number_button" onclick="updateGiven('<')">&lt;</td>
+                </tr>
+                <tr>
+                    <td class="payment_number_button" onclick="order()">OK</td>
+                    <td class="payment_number_button" onclick="given = ''; updateUI()">CL</td>
+                    <td class="payment_number_button" onclick="returnToOrderscreen()">Zurück</td>
+                </tr>
+            </table>
+
+        </div>
     </div>
 
 </body>

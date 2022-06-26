@@ -6,6 +6,15 @@ body {
     font-family: Arial, "serif";
 }
 
+body * {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+body *::-webkit-scrollbar {
+    display: none;
+}
+
 .background {
     z-index: -1;
     width: 100%;
@@ -71,10 +80,11 @@ body {
 .content {
     z-index: 1;
     position: absolute;
+    overflow-y: scroll;
     top: 10%;
     left: 0;
     width: 100%;
-    height: 80%;
+    height: 70%;
     margin-top: 5%
 }
 
@@ -90,12 +100,14 @@ td {
     height: 50pt;
     border-top: 1pt #ffffff solid;
 }
+
 th {
     position: sticky;
     position: -webkit-sticky;
     top: 0;
-    z-index: 2;
-    padding-bottom:2%
+    background: rgba(0, 0, 0, 0.8);
+    padding-bottom: 2%;
+    padding-top: 2%;
 }
 
 .content table tr .amount {
@@ -112,4 +124,38 @@ th[id=header_amount] {
 
 th[id=header_temp_total] {
     min-width: 7%;
+}
+
+.invisible_row {
+    border: 0;
+}
+
+.div_cashpoint_customer_info {
+    z-index: 4;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 80%;
+    height: 80%;
+    margin: 10%;
+    background: white;
+    color: green;
+    font-weight: bolder;
+    font-size: 50pt;
+    display: table;
+    transition: 0.5s;
+    border-radius: 5pt;
+
+    text-align: center;
+}
+
+.div_cashpoint_customer_info * {
+    vertical-align: middle;
+}
+
+.id {
+    margin: 5pt;
+    padding: 5pt;
+    border: 2pt solid red;
+    border-radius: 2pt;
 }

@@ -31,4 +31,4 @@ if ($_GET["data"] !== "" && $_GET["data"] != "LAST_ROW_ID") {
     }
 }
 
-$conn->query("DELETE FROM smoothie2.live_orders WHERE amount < 1");
+$conn->query("DELETE FROM smoothie2.live_orders WHERE amount < 0");
