@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasse</title>
     <script type="text/javascript" src="js/jquery.js"></script>
-    <script type="text/javascript" src="js/tools.js"></script>
-    <script type="text/javascript" src="js/cashpoint.js"></script>
+    <script type="text/javascript" src="js/tools.ts"></script>
+    <script type="text/javascript" src="js/cashpoint.ts"></script>
 
     <link rel="stylesheet" href="css/main.css">
 </head>
@@ -62,9 +62,9 @@
                     <td class="payment_number_button" onclick="updateGiven('<')">&lt;</td>
                 </tr>
                 <tr>
-                    <td class="payment_number_button" onclick="order()">OK</td>
+                    <td class="payment_number_button" id="payment_number_button_order">OK</td>
                     <td class="payment_number_button" onclick="given = ''; updateUI()">CL</td>
-                    <td class="payment_number_button" onclick="returnToOrderscreen()">Zurück</td>
+                    <td class="payment_number_button" id="payment_number_button_return">Zurück</td>
                 </tr>
             </table>
 

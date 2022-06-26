@@ -1,52 +1,58 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const $ = require("./jquery.js");
-const tools_1 = require("./tools");
+import * as $ from "./jquery.js";
+import {addLeadingZeros, getCookie, query, setCookie} from "./tools";
+
 function initPage() {
     // show cashpoint selector
     document.getElementById("div_select_cashpoint").style.display = "block";
     document.getElementById("div_cashpoint_content").style.display = "none";
 }
+
 function updateHeader() {
     setTimeout(function () {
         let currentDate = new Date();
-        document.getElementById("header").innerText = `Kasse ${(0, tools_1.getCookie)("cashpoint_customer")} • ${currentDate.getDate()}.${(0, tools_1.addLeadingZeros)((currentDate.getMonth() + 1), 2)}.${currentDate.getFullYear()} • ${(0, tools_1.addLeadingZeros)(currentDate.getHours(), 2)}:${(0, tools_1.addLeadingZeros)(currentDate.getMinutes(), 2)}`;
+        document.getElementById("header").innerText = `Kasse ${getCookie("cashpoint_customer")} • ${currentDate.getDate()}.${addLeadingZeros((currentDate.getMonth() + 1), 2)}.${currentDate.getFullYear()} • ${addLeadingZeros(currentDate.getHours(), 2)}:${addLeadingZeros(currentDate.getMinutes(), 2)}`;
         updateHeader();
     }, 1000);
 }
+
 function initialize_cashpoint() {
+
     // show cashpoint data
+
     document.getElementById("div_select_cashpoint").style.display = "none";
     document.getElementById("div_cashpoint_content").style.display = "block";
     // get cashpoint data
-    const cashpoint = document.getElementById("input_select_cashpoint_id").value.toString();
-    (0, tools_1.setCookie)("cashpoint_customer", cashpoint, 1);
+
+    const cashpoint = (document.getElementById("input_select_cashpoint_id") as HTMLInputElement).value.toString();
+    setCookie("cashpoint_customer", cashpoint, 1);
+
     updateHeader();
     update();
 }
+
 function update() {
     setTimeout(function () {
-        let message = (0, tools_1.query)(`SELECT *
+        let message = query(`SELECT *
                              FROM smoothie2.customer_info
-                             WHERE cashpoint = ${(0, tools_1.getCookie)("cashpoint_customer")}`, "id;type;message");
+                             WHERE cashpoint = ${getCookie("cashpoint_customer")}`, "id;type;message");
         if (message !== "EMPTY") {
-            (0, tools_1.query)("DELETE FROM smoothie2.customer_info WHERE id = " + message.split(";")[0], "");
+            query("DELETE FROM smoothie2.customer_info WHERE id = " + message.split(";")[0], "");
             if (message.split(";")[1] === "-1") {
-                document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "0";
-            }
-            else {
+                (document.getElementById("div_cashpoint_customer_info").parentNode as HTMLElement).style.opacity = "0";
+            } else {
                 const message_details = message.split(";");
                 document.getElementById("div_cashpoint_customer_info").innerHTML = message_details[2];
-                document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "1";
+                (document.getElementById("div_cashpoint_customer_info").parentNode as HTMLElement).style.opacity = "1";
             }
             update();
             return;
         }
+
         let content_before = document.getElementById("content").innerHTML;
-        const orderlist = (0, tools_1.query)(`SELECT *
+        const orderlist = query(`SELECT *
                                  FROM smoothie2.live_orders
                                           INNER JOIN smoothie2.products ON live_orders.product_id = products.id
-                                 WHERE cashpoint = ${(0, tools_1.getCookie)("cashpoint_customer")}
+                                 WHERE cashpoint = ${getCookie("cashpoint_customer")}
                                    AND amount > 0`, "name;amount;price").split("\n");
         let total = 0;
         let cups = 0;
@@ -59,27 +65,28 @@ function update() {
                 cups = cups + Number(amount);
                 total = total + (amount * price);
                 let full_price = (amount * price / 100).toFixed(2);
-                html = `${html}<tr><td>${item_details[0]}</td><td class="amount">${item_details[1]}</td><td>${full_price} €</td></tr>`;
+                html = `${html}<tr><td>${item_details[0]}</td><td class="amount">${item_details[1]}</td><td>${full_price} €</td></tr>`
             }
         });
         if (total)
-            html = `${html}<tr style="border-top: 3pt double #ffffff"><td>Pfand (1€ pro Becher) </td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`;
-        html = html + "<tr class='invisible_row'><td></td><td></td><td></td></tr>";
+            html = `${html}<tr style="border-top: 3pt double #ffffff"><td>Pfand (1€ pro Becher) </td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`
+        html = html + "<tr class='invisible_row'><td></td><td></td><td></td></tr>"
         html = html + "</table>";
         if (orderlist.length === 1) { // Element 0 is always "EMPTY" or the first value
             document.getElementById("footer").innerHTML = "Herzlich willkommen!";
             document.getElementById("content").innerHTML = "";
-        }
-        else {
+        } else {
             document.getElementById("content").innerHTML = html;
             if (content_before !== document.getElementById("content").innerHTML) {
                 document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
             }
-            document.getElementById("footer").innerHTML = "Gesamt: " + ((total / 100) + cups).toFixed(2) + " €";
+            document.getElementById("footer").innerHTML = "Gesamt: " + ((total / 100)+cups).toFixed(2) + " €";
         }
+
         update();
+
     }, 250);
 }
+
 $(document.body).addEventListener("onload", function () { initPage(); });
 $("#input_select_cashpoint_id").addEventListener("change", function () { initialize_cashpoint(); });
-//# sourceMappingURL=customer.js.map
