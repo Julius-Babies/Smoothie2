@@ -1,7 +1,5 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const $ = require("./jquery.js");
-const tools_1 = require("./tools");
+import * as $ from "./jquery.js";
+import { addLeadingZeros, getCookie, query, setCookie } from "./tools";
 function initPage() {
     // show cashpoint selector
     document.getElementById("div_select_cashpoint").style.display = "block";
@@ -10,7 +8,7 @@ function initPage() {
 function updateHeader() {
     setTimeout(function () {
         let currentDate = new Date();
-        document.getElementById("header").innerText = `Kasse ${(0, tools_1.getCookie)("cashpoint_customer")} • ${currentDate.getDate()}.${(0, tools_1.addLeadingZeros)((currentDate.getMonth() + 1), 2)}.${currentDate.getFullYear()} • ${(0, tools_1.addLeadingZeros)(currentDate.getHours(), 2)}:${(0, tools_1.addLeadingZeros)(currentDate.getMinutes(), 2)}`;
+        document.getElementById("header").innerText = `Kasse ${getCookie("cashpoint_customer")} • ${currentDate.getDate()}.${addLeadingZeros((currentDate.getMonth() + 1), 2)}.${currentDate.getFullYear()} • ${addLeadingZeros(currentDate.getHours(), 2)}:${addLeadingZeros(currentDate.getMinutes(), 2)}`;
         updateHeader();
     }, 1000);
 }
@@ -20,15 +18,15 @@ function initialize_cashpoint() {
     document.getElementById("div_cashpoint_content").style.display = "block";
     // get cashpoint data
     const cashpoint = document.getElementById("input_select_cashpoint_id").value.toString();
-    (0, tools_1.setCookie)("cashpoint_customer", cashpoint, 1);
+    setCookie("cashpoint_customer", cashpoint, 1);
     updateHeader();
     update();
 }
 function update() {
     setTimeout(function () {
-        let message = (0, tools_1.query)("customer.get_messages", (0, tools_1.getCookie)("cashpoint_customer"));
+        let message = query("customer.get_messages", getCookie("cashpoint_customer"));
         if (message !== "EMPTY") {
-            (0, tools_1.query)("customer.delete_message", message.split(";")[0]);
+            query("customer.delete_message", message.split(";")[0]);
             if (message.split(";")[1] === "-1") {
                 document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "0";
             }
@@ -41,7 +39,7 @@ function update() {
             return;
         }
         let content_before = document.getElementById("content").innerHTML;
-        const orderlist = (0, tools_1.query)("customer.live_orders", (0, tools_1.getCookie)("cashpoint_customer")).split("\n");
+        const orderlist = query("customer.live_orders", getCookie("cashpoint_customer")).split("\n");
         let total = 0;
         let cups = 0;
         let html = "<table class='live_order'><tr><th id='header_name'>Name</th><th id='header_amount'>Anzahl</th><th id='header_temp_total'>Zwischensumme</th></tr>";

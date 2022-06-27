@@ -1,9 +1,7 @@
-"use strict";
 // methods
 // noinspection ES6ConvertVarToLetConst
-Object.defineProperty(exports, "__esModule", { value: true });
-const $ = require("./jquery.js");
-const tools_1 = require("./tools");
+import * as $ from "./jquery.js";
+import { getCookie, query, setCookie } from "./tools";
 var products_map = new Map();
 var given = "";
 var orderlist;
@@ -23,7 +21,7 @@ function initCashpoint() {
     $("#div_cashpoint_content_payment_background").style.display = "none";
     // get product data
     const cashpoint = $("#input_select_cashpoint_id").value.toString();
-    const products = (0, tools_1.query)("cashpoint.get_products");
+    const products = query("cashpoint.get_products");
     let product_list = products.split("\n");
     $("#div_cashpoint_content_products").innerHTML = "";
     // noinspection JSUnresolvedVariable
@@ -37,7 +35,7 @@ function initCashpoint() {
             console.log(`Order reset: ${response}`);
         }
     });
-    (0, tools_1.setCookie)("cashpoint_staff", cashpoint, 1);
+    setCookie("cashpoint_staff", cashpoint, 1);
     // create buttons for every product
     product_list.forEach(function (item) {
         if (item !== "") {
@@ -169,7 +167,7 @@ function updateUI() {
 }
 function updateLiveOrders() {
     products_map.forEach(function (value, key) {
-        (0, tools_1.query)("cashpoint.update_live_order", (0, tools_1.getCookie)("cashpoint_staff") + ";" + key + ";" + value[2]);
+        query("cashpoint.update_live_order", getCookie("cashpoint_staff") + ";" + key + ";" + value[2]);
     });
 }
 function addProduct(name) {
@@ -218,7 +216,7 @@ function clearOrder() {
 function order() {
     let screen_lock = $("#screen_lock");
     screen_lock.style.display = "block";
-    let id = (0, tools_1.query)("cashpoint.order", (0, tools_1.getCookie)("cashpoint_staff"));
+    let id = query("cashpoint.order", getCookie("cashpoint_staff"));
     // id info
     let paragraph = document.createElement("p");
     let heading1 = document.createElement("span");
@@ -230,11 +228,11 @@ function order() {
     id_div.innerText = id.toString();
     id_div.classList.add("id");
     paragraph.appendChild(id_div);
-    (0, tools_1.query)("cashpoint.insert_message", `${(0, tools_1.getCookie)("cashpoint_staff")};${paragraph.outerHTML}`);
+    query("cashpoint.insert_message", `${getCookie("cashpoint_staff")};${paragraph.outerHTML}`);
     let total = 0;
     products_map.forEach(function (value, key) {
         if (value[2] !== 0) {
-            (0, tools_1.query)("cashpoint.insert_order_details", `${id};${key};${value[2]}`);
+            query("cashpoint.insert_order_details", `${id};${key};${value[2]}`);
         }
         total = total + value[2] * value[0] + value[2] * 100;
     });
@@ -242,7 +240,7 @@ function order() {
     initCashpoint();
 }
 function clearCustomerWindow() {
-    (0, tools_1.query)("cashpoint.clear_messages", (0, tools_1.getCookie)("cashpoint_staff"));
+    query("cashpoint.clear_messages", getCookie("cashpoint_staff"));
 }
 // noinspection JSUnusedLocalSymbols
 function updateGiven(update_char) {
