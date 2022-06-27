@@ -1,9 +1,8 @@
-import * as $ from "./jquery.js";
-export function getCookie(cname) {
+function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
     let ca = decodedCookie.split(';');
-    for (let i = 0; i < ca.length; i++) {
+    for(let i = 0; i <ca.length; i++) {
         let c = ca[i];
         while (c.charAt(0) === ' ') {
             c = c.substring(1);
@@ -14,21 +13,25 @@ export function getCookie(cname) {
     }
     return "";
 }
-export function setCookie(name, value, expire_days) {
-    const d = new Date();
-    d.setTime(d.getTime() + (expire_days * 24 * 60 * 60 * 1000));
-    let expires = "expires=" + d.toUTCString();
-    document.cookie = name + "=" + value + ";" + expires + ";path=/";
+
+function setCookie(name, value, expire_days) {
+  const d = new Date();
+  d.setTime(d.getTime() + (expire_days*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
-export function query(type, data = "") {
-    let serverdata;
+
+function query(query, data) {
+    let serverdata = "";
     // noinspection JSUnresolvedVariable
     $.ajax({
         url: "./querymaster.php",
-        method: "POST",
+        method: "GET",
         async: false,
         data: {
-            type: type,
+            username: "webserver",
+            pass: "cloudiaserver",
+            query: query,
             data: data
         },
         success: function (response) {
@@ -37,7 +40,7 @@ export function query(type, data = "") {
     });
     return serverdata;
 }
-export function addLeadingZeros(num, totalLength) {
+
+function addLeadingZeros(num, totalLength) {
     return String(num).padStart(totalLength, '0');
 }
-//# sourceMappingURL=tools.js.map

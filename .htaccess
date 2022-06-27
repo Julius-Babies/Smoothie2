@@ -1,0 +1,4 @@
+AuthType Basic
+AuthName "Smoothie Webinterface gesperrt"
+AuthUserFile ./.htpasswd
+require valid-user

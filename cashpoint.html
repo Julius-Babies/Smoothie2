@@ -4,15 +4,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kasse</title>
-    <script> var exports = {}; </script>
-    <script src="js/jquery.js"></script>
-    <script src="js/tools.js"></script>
-    <script src="js/cashpoint.js"></script>
+    <script type="text/javascript" src="js/jquery.js"></script>
+    <script type="text/javascript" src="js/tools.js"></script>
+    <script type="text/javascript" src="js/cashpoint.js"></script>
 
     <link rel="stylesheet" href="css/main.css">
 </head>
 
-<body>
+<body onload="initPage()">
 
     <div class="screen_lock" id="screen_lock"><div>Bestellen...</div></div>
 
@@ -63,9 +62,9 @@
                     <td class="payment_number_button" onclick="updateGiven('<')">&lt;</td>
                 </tr>
                 <tr>
-                    <td class="payment_number_button" id="payment_number_button_order">OK</td>
+                    <td class="payment_number_button" onclick="order()">OK</td>
                     <td class="payment_number_button" onclick="given = ''; updateUI()">CL</td>
-                    <td class="payment_number_button" id="payment_number_button_return">Zurück</td>
+                    <td class="payment_number_button" onclick="returnToOrderscreen()">Zurück</td>
                 </tr>
             </table>
 
