@@ -17,8 +17,8 @@ Voraussetzung ist ein funktionierender Webserver mit PHP7 und MariaDB.
 
 ## Hinweise zur Software
 - Es ist aktuell nur mühselig möglich, mehr als zwei Kassen zu betreiben
-- Die Software ist gegen absichtliche oder versehentliche SQL-Injections nicht geschützt
-- Die Software ist gegen XSS (Cross Site Scripting) nicht geschützt
+- Die Software ist nicht gegen absichtliche oder versehentliche SQL-Injections geschützt
+- Die Software ist nicht gegen XSS (Cross Site Scripting) geschützt
 
 ## Aussichten/Roadmap
 - Einrichten eines Adminpanels mit:
