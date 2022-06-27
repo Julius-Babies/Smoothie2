@@ -1,6 +1,34 @@
 # Smoothie 2
 Dieses Projekt ist ein Kassensystem, welches für einen Smoothiestand bei einem Sommerfest entwickelt wurde. Es kann allerdings auch lokal für den eigenen Betrieb aufgesetzt werden, eine Dokumentation folgt noch.
 
+## Aufsetzen
+Voraussetzung ist ein funktionierender Webserver mit PHP7 und MariaDB.
+1. Dieses Github-Repository auf den Server klonen
+2. Einen Datenbankbenutzer anlegen, welcher folgende Rechte besitzt:
+   - SELECT
+   - UPDATE
+   - INSERT
+   - DELETE
+   - CREATE
+3. Aktualisiere setup.php (Zeile 4) und querymaster.php (Zeile 71) mit den neuen Zugangsdaten
+4. Fülle die Tabelle products mit Produkten aus (Preise sind in ct anzugeben)
+5. Fülle die Tabelle ingredients mit Zutaten aus
+6. Fülle die Tabelle ingredients_assign mit der product_id und ingredient_id aus (PHPMyAdmin kann dabei sehr hilfreich sein)
+
+## Hinweise zur Software
+- Es ist aktuell nur mühselig möglich, mehr als zwei Kassen zu betreiben
+- Die Software ist gegen absichtliche oder versehentliche SQL-Injections nicht geschützt
+- Die Software ist gegen XSS (Cross Site Scripting) nicht geschützt
+
+## Aussichten/Roadmap
+- Einrichten eines Adminpanels mit:
+  - Kassenverwaltung
+  - Benutzerverwaltung
+  - Statistiken
+  - Produkt-/ Zutatenverwaltung
+- Verbesserung der Küchenansicht
+- Hinzufügen von Produktplatzierungen auf Kassenbildschirmen und großen Bildschirmen
+
 ## Entwicklungshinweise
 
 ### querymaster.php
