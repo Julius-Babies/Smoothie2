@@ -8,7 +8,7 @@ function update() {
         let inProgress = [];
         let finished = [];
 
-        let orders = query("SELECT * FROM smoothie2.orders ORDER BY change_time", "id;status").split("\n");
+        let orders = query("id_viewer.get_ids").split("\n");
         orders.forEach(function (order) {
             if (order !== "EMPTY" && order !== "") {
                 let order_details = order.split("\n");
@@ -49,13 +49,7 @@ function update() {
 
         html = "";
 
-        let products = query(`SELECT smoothie2.products.name  AS product_name,
-                                                     smoothie2.products.price AS product_price,
-                                                     MIN(i.available)         AS ingredients_exists
-                                              FROM smoothie2.products
-                                                       LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id
-                                                       LEFT JOIN smoothie2.ingredients i on i.id = ia.ingredient_id
-                                              GROUP BY smoothie2.products.name`, "product_name;product_price;ingredients_exists").split("\n");
+        let products = query("id_viewer.get_products").split("\n");
 
         let not_available = Array();
         html = "";

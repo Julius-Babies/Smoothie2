@@ -23,15 +23,7 @@ function initCashpoint() {
     $("#div_cashpoint_content_payment_background").style.display = "none";
     // get product data
     const cashpoint = $("#input_select_cashpoint_id").value.toString();
-    const products = (0, tools_1.query)(`SELECT smoothie2.products.name              AS product_name,
-                                   smoothie2.products.price             AS product_price,
-                                   MIN(smoothie2.ingredients.available) AS ingredients_exist
-                            FROM smoothie2.products
-                                     LEFT JOIN smoothie2.ingredient_assign ON products.id = ingredient_assign.product_id
-                                     LEFT JOIN smoothie2.ingredients
-                                               ON smoothie2.ingredients.id = smoothie2.ingredient_assign.ingredient_id
-                            GROUP BY smoothie2.products.name
-                            ORDER BY products.name`, "product_name;product_price;ingredients_exist");
+    const products = (0, tools_1.query)("cashpoint.get_products");
     let product_list = products.split("\n");
     $("#div_cashpoint_content_products").innerHTML = "";
     // noinspection JSUnresolvedVariable
@@ -177,10 +169,7 @@ function updateUI() {
 }
 function updateLiveOrders() {
     products_map.forEach(function (value, key) {
-        (0, tools_1.query)(`UPDATE smoothie2.live_orders
-               SET amount = ${value[2]}
-               WHERE product_id = (SELECT id FROM smoothie2.products WHERE name = '${key}' LIMIT 1)
-                 AND cashpoint = ${(0, tools_1.getCookie)(`cashpoint_staff`)}`, "");
+        (0, tools_1.query)("cashpoint.update_live_order", (0, tools_1.getCookie)("cashpoint_staff") + ";" + key + ";" + value[2]);
     });
 }
 function addProduct(name) {
@@ -229,7 +218,7 @@ function clearOrder() {
 function order() {
     let screen_lock = $("#screen_lock");
     screen_lock.style.display = "block";
-    let id = (0, tools_1.query)("INSERT INTO smoothie2.orders (cashpoint, status) VALUES (" + (0, tools_1.getCookie)("cashpoint_staff") + ", 0)", "LAST_ROW_ID");
+    let id = (0, tools_1.query)("cashpoint.order", (0, tools_1.getCookie)("cashpoint_staff"));
     // id info
     let paragraph = document.createElement("p");
     let heading1 = document.createElement("span");
@@ -241,12 +230,11 @@ function order() {
     id_div.innerText = id.toString();
     id_div.classList.add("id");
     paragraph.appendChild(id_div);
-    (0, tools_1.query)(`INSERT INTO smoothie2.customer_info (type, cashpoint, message) VALUES (0, ${(0, tools_1.getCookie)("cashpoint_staff")}, '${paragraph.outerHTML}')`);
+    (0, tools_1.query)("cashpoint.insert_message", `${(0, tools_1.getCookie)("cashpoint_staff")};${paragraph.outerHTML}`);
     let total = 0;
     products_map.forEach(function (value, key) {
         if (value[2] !== 0) {
-            (0, tools_1.query)(`INSERT INTO smoothie2.order_details (order_id, product_id, amount)
-                   VALUES (${id}, (SELECT id FROM smoothie2.products WHERE name = "${key}"), ${value[2]})`);
+            (0, tools_1.query)("cashpoint.insert_order_details", `${id};${key};${value[2]}`);
         }
         total = total + value[2] * value[0] + value[2] * 100;
     });
@@ -254,8 +242,9 @@ function order() {
     initCashpoint();
 }
 function clearCustomerWindow() {
-    (0, tools_1.query)("INSERT INTO smoothie2.customer_info (type, cashpoint, message) VALUES (-1, " + (0, tools_1.getCookie)("cashpoint_staff") + ", \"\")");
+    (0, tools_1.query)("cashpoint.clear_messages", (0, tools_1.getCookie)("cashpoint_staff"));
 }
+// noinspection JSUnusedLocalSymbols
 function updateGiven(update_char) {
     if (update_char === "<") {
         given = given.slice(0, given.length - 1);

@@ -23,17 +23,15 @@ export function setCookie(name, value, expire_days) {
   document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
-export function query(query, data = "") {
+export function query(type, data = "") {
     let serverdata:String;
     // noinspection JSUnresolvedVariable
     $.ajax({
         url: "./querymaster.php",
-        method: "GET",
+        method: "POST",
         async: false,
         data: {
-            username: "webserver",
-            pass: "cloudiaserver",
-            query: query,
+            type: type,
             data: data
         },
         success: function (response) {

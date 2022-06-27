@@ -26,11 +26,9 @@ function initialize_cashpoint() {
 }
 function update() {
     setTimeout(function () {
-        let message = (0, tools_1.query)(`SELECT *
-                             FROM smoothie2.customer_info
-                             WHERE cashpoint = ${(0, tools_1.getCookie)("cashpoint_customer")}`, "id;type;message");
+        let message = (0, tools_1.query)("customer.get_messages", (0, tools_1.getCookie)("cashpoint_customer"));
         if (message !== "EMPTY") {
-            (0, tools_1.query)("DELETE FROM smoothie2.customer_info WHERE id = " + message.split(";")[0], "");
+            (0, tools_1.query)("customer.delete_message", message.split(";")[0]);
             if (message.split(";")[1] === "-1") {
                 document.getElementById("div_cashpoint_customer_info").parentNode.style.opacity = "0";
             }
@@ -43,11 +41,7 @@ function update() {
             return;
         }
         let content_before = document.getElementById("content").innerHTML;
-        const orderlist = (0, tools_1.query)(`SELECT *
-                                 FROM smoothie2.live_orders
-                                          INNER JOIN smoothie2.products ON live_orders.product_id = products.id
-                                 WHERE cashpoint = ${(0, tools_1.getCookie)("cashpoint_customer")}
-                                   AND amount > 0`, "name;amount;price").split("\n");
+        const orderlist = (0, tools_1.query)("customer.live_orders", (0, tools_1.getCookie)("cashpoint_customer")).split("\n");
         let total = 0;
         let cups = 0;
         let html = "<table class='live_order'><tr><th id='header_name'>Name</th><th id='header_amount'>Anzahl</th><th id='header_temp_total'>Zwischensumme</th></tr>";

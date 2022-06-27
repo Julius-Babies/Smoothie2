@@ -3,7 +3,7 @@ import {query} from "./tools";
 
 function update(recursion = true) {
     setTimeout(function () {
-        const data = query("SELECT * FROM smoothie2.orders WHERE status = 0 OR status = 1 ORDER BY create_time", "id;create_time;status").split("\n");
+        const data = query("cuisine.get_orders").split("\n");
         let html = "<table style='table-layout: fixed; border-collapse: collapse'><tr><th style='width: 100px'>Bestell-ID</th><th style='width: 800px'>Bestellung</th><th style='width: 300px;'>Datum</th><th style='width: 300px;'>Schließen</th></tr>";
         data.forEach(function (item) {
             if (item !== "" && item !== "EMPTY") {
@@ -14,7 +14,7 @@ function update(recursion = true) {
                     html = html + "<tr><td>" + order_data[0] + "</td>";
                 }
 
-                const order_components = query("SELECT * FROM smoothie2.order_details LEFT JOIN smoothie2.products ON order_details.product_id = products.id WHERE order_details.order_id = " + order_data[0], "name;amount").split("\n");
+                const order_components = query("cuisine.get_order_details", order_data[0]).split("\n");
                 let table = "<table>";
                 order_components.forEach(function (item) {
                     if (item !== "") {
