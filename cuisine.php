@@ -20,7 +20,7 @@
     <?php
 
     if (isset($_GET["change_status"])) {
-        echo "<script> query(\"UPDATE smoothie2.orders SET status = " . $_GET["status"] . " WHERE id = " . $_GET["change_status"] . "\"); window.close();</script>";
+        echo "<script> query(\"cuisine.update_status\", \"$_GET[change_status];$_GET[status]\"); window.close();</script>";
     }
 
     ?>

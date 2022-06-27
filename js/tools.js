@@ -21,17 +21,17 @@ function setCookie(name, value, expire_days) {
   document.cookie = name + "=" + value + ";" + expires + ";path=/";
 }
 
-function query(query, data) {
+function query(type, data) {
     let serverdata = "";
-    // noinspection JSUnresolvedVariable
+    /**
+     * noinspection JSUnresolvedVariable
+     */
     $.ajax({
         url: "./querymaster.php",
-        method: "GET",
+        method: "POST",
         async: false,
         data: {
-            username: "webserver",
-            pass: "cloudiaserver",
-            query: query,
+            type: type,
             data: data
         },
         success: function (response) {
