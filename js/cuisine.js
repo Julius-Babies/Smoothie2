@@ -1,8 +1,10 @@
-import * as $ from './jquery.js';
-import { query } from "./tools";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = require("./jquery.js");
+const tools_1 = require("./tools");
 function update(recursion = true) {
     setTimeout(function () {
-        const data = query("cuisine.get_orders").split("\n");
+        const data = (0, tools_1.query)("cuisine.get_orders").split("\n");
         let html = "<table style='table-layout: fixed; border-collapse: collapse'><tr><th style='width: 100px'>Bestell-ID</th><th style='width: 800px'>Bestellung</th><th style='width: 300px;'>Datum</th><th style='width: 300px;'>Schließen</th></tr>";
         data.forEach(function (item) {
             if (item !== "" && item !== "EMPTY") {
@@ -13,7 +15,7 @@ function update(recursion = true) {
                 else {
                     html = html + "<tr><td>" + order_data[0] + "</td>";
                 }
-                const order_components = query("cuisine.get_order_details", order_data[0]).split("\n");
+                const order_components = (0, tools_1.query)("cuisine.get_order_details", order_data[0]).split("\n");
                 let table = "<table>";
                 order_components.forEach(function (item) {
                     if (item !== "") {

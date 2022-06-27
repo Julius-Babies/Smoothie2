@@ -1,11 +1,13 @@
-import * as $ from "./jquery.js";
-import { query } from "./tools";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const $ = require("./jquery.js");
+const tools_1 = require("./tools");
 function update() {
     setTimeout(function () {
         let html = "<table id='table_ids'><tr><th>In Zubereitung</th><th>Abholbereit</th></tr>";
         let inProgress = [];
         let finished = [];
-        let orders = query("id_viewer.get_ids").split("\n");
+        let orders = (0, tools_1.query)("id_viewer.get_ids").split("\n");
         orders.forEach(function (order) {
             if (order !== "EMPTY" && order !== "") {
                 let order_details = order.split("\n");
@@ -56,7 +58,7 @@ function update() {
         }
         document.getElementById("id_viewer").innerHTML = html + "</table>";
         html = "";
-        let products = query("id_viewer.get_products").split("\n");
+        let products = (0, tools_1.query)("id_viewer.get_products").split("\n");
         let not_available = Array();
         html = "";
         products.forEach(function (product) {
