@@ -4,6 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Küchenansicht</title>
+    <script> var exports = {}; </script>
     <script src="js/cuisine.js" type="text/javascript"></script>
     <style rel="stylesheet">
         table, th, td {
