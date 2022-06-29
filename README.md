@@ -1,5 +1,5 @@
 # Smoothie 2
-Dieses Projekt ist ein Kassensystem, welches für einen Smoothiestand bei einem Sommerfest entwickelt wurde. Es kann allerdings auch lokal für den eigenen Betrieb aufgesetzt werden, eine Dokumentation folgt noch.
+Dieses Projekt ist ein Kassensystem, welches für einen Smoothiestand bei einem Sommerfest entwickelt wurde. Es kann allerdings auch lokal für den eigenen Betrieb aufgesetzt werden, eine Dokumentation folgt noch. Solltest du das Projekt verwenden wollen, **BENUTZE UNBEDINGT RELEASES**, da in main die neuesten Änderungen hochgeladen werden, welche teils nicht funktionieren. Ich werde dies aber irgendwann in einen seperaten dev-Branch auslagern.
 
 ## Aufsetzen
 Voraussetzung ist ein funktionierender Webserver mit PHP7 und MariaDB.
