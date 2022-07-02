@@ -61,8 +61,16 @@ if ($type === "id_viewer.get_ids") {
     $data = "";
 } else if ($type === "cashpoint.clear_messages") {
     $data = explode(";", $data);
-    $sql  = "INSERT INTO smoothie2.customer_info (type, cashpoint, message) VALUES (-1, $data[0], '')";
+    $sql = "INSERT INTO smoothie2.customer_info (type, cashpoint, message) VALUES (-1, $data[0], '')";
     $data = "";
+} else if ($type === "administration.change_ingredient") {
+    $data = explode(";", $data);
+    $sql = "UPDATE smoothie2.ingredients SET available = $data[1] WHERE name = '$data[0]'";
+    $data = "";
+} else if ($type === "administration.get_product_data") {
+    $sql = "SELECT smoothie2.products.name AS product_name, smoothie2.products.description AS product_description, smoothie2.products.price AS product_price, smoothie2.ingredients.name AS ingredient_name, smoothie2.ingredients.available AS ingredient_exists FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id LEFT JOIN smoothie2.ingredients ON ia.ingredient_id = ingredients.id";
+    $data = "product_name;product_description;product_price;ingredient_name;ingredient_exists";
+
 } else {
     echo "NO DIRECT QUERIES ALLOWED";
     exit();

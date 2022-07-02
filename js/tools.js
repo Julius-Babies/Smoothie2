@@ -1,3 +1,6 @@
+// noinspection ES6UnusedImports -> use jQuery.<something> in JS
+// import * as $ from "../node_modules/jquery/dist/jquery";
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -26,7 +29,7 @@ function query(type, data) {
     /**
      * noinspection JSUnresolvedVariable
      */
-    $.ajax({
+    jQuery.ajax({
         url: "./querymaster.php",
         method: "POST",
         async: false,
@@ -36,6 +39,7 @@ function query(type, data) {
         },
         success: function (response) {
             serverdata = response;
+            console.log(`Serverresponse: ${response}`)
         }
     });
     return serverdata;

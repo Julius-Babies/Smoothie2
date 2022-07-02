@@ -21,9 +21,9 @@ function update(recursion = true) {
                 });
                 table = table + "</table>";
                 if (order_data[2] === "0") {
-                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td><a href='cuisine.php?change_status=${order_data[0]}&status=1' target='_blank'>Fertig!</a></td></tr>`
+                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td id="${order_data[0]}" onclick='query("cuisine.update_status", "${order_data[0]};1"); document.getElementById("${order_data[0]}").innerText = "Bitte warten..."'>Fertig</td></tr>`
                 } else {
-                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td><a href='cuisine.php?change_status=${order_data[0]}&status=2' target='_blank'>Ausgegeben!</a></td></tr>`
+                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td  id="${order_data[0]}" onclick='query("cuisine.update_status", "${order_data[0]};2"); document.getElementById("${order_data[0]}").innerText = "Bitte warten..."'>Ausgegeben!</td></tr>`
                 }
             }
         });
