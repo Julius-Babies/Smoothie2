@@ -1,0 +1,22 @@
+{
+  "name": "smoothie2",
+  "version": "1.0.0",
+  "description": "Smoothie2 ist ein Kassensystem",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Julius-Babies/Smoothie2.git"
+  },
+  "author": "Julius Babies",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Julius-Babies/Smoothie2/issues"
+  },
+  "homepage": "https://github.com/Julius-Babies/Smoothie2#readme",
+  "dependencies": {
+    "jquery": "^3.6.0"
+  }
+}

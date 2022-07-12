@@ -1,0 +1,18 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "sourceMap": true,
+    "watch": true,
+    "lib": [
+      "dom",
+      "es2017",
+      "scripthost"
+    ]
+  },
+  "include": [
+    "js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

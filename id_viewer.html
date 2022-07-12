@@ -5,14 +5,16 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ID-Übersicht</title>
-    <script src="js/jquery.js" rel="script" type="text/javascript"></script>
-    <script src="js/tools.js" rel="script" type="text/javascript"></script>
-    <script src="js/ids.js" rel="script" type="text/javascript"></script>
+
+    <script type="module">
+        import {update} from "./js/ids.js";
+        document.querySelector("body").onload = function () { update(); };
+    </script>
 
     <link rel="stylesheet" href="css/ids.css" type="text/css">
 </head>
 
-<body onload="update()">
+<body>
 <img alt="background" src="img/background.jpg" class="background">
 <div class="content">
     <div class="id_viewer" id="id_viewer"></div>

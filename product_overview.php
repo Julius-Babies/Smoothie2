@@ -5,8 +5,6 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Produkte</title>
-    <script src="js/jquery.js"></script>
-    <script src="js/tools.js"></script>
     <link rel="stylesheet" type="text/css" href="css/product_overview.css">
 </head>
 <body>
@@ -25,9 +23,9 @@ foreach ($product_data as $product_name => $product) {
     echo "$product_name (" . $product[0][0] . " ct): <i>" . $product[0][1] . "</i> - benötigt: ";
     foreach ($product[1] as $ingredient) {
         if ($ingredient[1]) {
-            echo "<span style='color: #00ff00' class='ingredient' onclick='query(\"administration.change_ingredient\", \"$ingredient[0];0\"); window.location.reload();'>$ingredient[0]</span>, ";
+            echo "<span style='color: #00ff00' class='ingredient' id='ingredient_$ingredient[0]_0'>$ingredient[0]</span>, ";
         } else {
-            echo "<span style='color: #ff0000' class='ingredient'onclick='query(\"administration.change_ingredient\", \"$ingredient[0];1\"); window.location.reload();'>$ingredient[0]</span>, ";
+            echo "<span style='color: #ff0000' class='ingredient' id='ingredient_$ingredient[0]_1'>$ingredient[0]</span>, ";
         }
     }
     echo "<br>";
@@ -35,4 +33,8 @@ foreach ($product_data as $product_name => $product) {
 ?>
 
 </body>
+<script type="module">
+    import {initPage} from "./js/product_overview.js";
+    document.querySelector("body").onload = function () { initPage(); };
+</script>
 </html>
