@@ -149,6 +149,10 @@ th[id=header_temp_total] {
     text-align: center;
 }
 
+.video {
+    background: rgba(255, 255, 255, 0);
+}
+
 .div_cashpoint_customer_info * {
     vertical-align: middle;
 }

@@ -36,9 +36,11 @@ function update() {
             query("customer.delete_message", message.split(";")[0]);
             if (message.split(";")[1] === "-1") {
                 (<HTMLElement>document.getElementById("div_cashpoint_customer_info").parentNode).style.opacity = "0";
+                document.querySelector("video").style.display = "block";
             } else {
                 message = message.split(";");
                 document.getElementById("div_cashpoint_customer_info").innerHTML = message[2];
+                document.querySelector("video").style.display = "none";
                 (<HTMLElement>document.getElementById("div_cashpoint_customer_info").parentNode).style.opacity = "1";
             }
             update();
@@ -68,8 +70,10 @@ function update() {
         if (orderlist.length === 1) { // Element 0 is always "EMPTY" or the first value
             document.getElementById("footer").innerHTML = "Herzlich willkommen!";
             document.getElementById("content").innerHTML = "";
+            document.querySelector("video").style.display = "block";
         } else {
             document.getElementById("content").innerHTML = html;
+            document.querySelector("video").style.display = "none";
             if (content_before !== document.getElementById("content").innerHTML) {
                 document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
             }
