@@ -1,5 +1,5 @@
 // noinspection ES6UnusedImports -> use jQuery.<something> in JS
-// import * as $ from "../node_modules/jquery/dist/jquery";
+// import * as $ from "../modules/jquery/dist/jquery";
 
 function getCookie(cname) {
     let name = cname + "=";
@@ -39,7 +39,7 @@ function query(type, data) {
         },
         success: function (response) {
             serverdata = response;
-            console.log(`Serverresponse: ${response}`)
+            //console.log(`Serverresponse: ${response}`)
         }
     });
     return serverdata;

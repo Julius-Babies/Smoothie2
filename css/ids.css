@@ -31,7 +31,7 @@ table[id=table_ids] {
     border-collapse: collapse;
     table-layout: fixed;
     display: block;
-    max-height: 66%;
+    max-height: calc(100% - 80px - 700px);
 }
 
 th:first-of-type {
@@ -47,9 +47,9 @@ table[id=table_ids] tr {
 }
 
 table[id=table_ids] span {
-    min-width: 30%;
+    width: 30%;
     margin: 5%;
-    font-size: 150px;
+    font-size: 130px;
     display: inline-block;
     padding: 3%;
     text-align: center;
@@ -70,45 +70,14 @@ table[id=table_ids] tr:nth-child(2) td:nth-child(2) span {
     width: 65%
 }
 
-.ads {
+.info {
+    z-index: 100;
     position: fixed;
     bottom: 0;
-    left: 0;
     width: 100%;
-    max-height: 33%;
-    height: fit-content;
-}
-
-.ads > div[id=ads\.products], .ads > div[id=ads\.ads] {
-    width: 47%;
-    margin: 1%;
-    display: inline-block;
-}
-
-table[id=table_products] {
-    border-collapse: collapse;
-    font-size: 28px
-}
-
-table[id=table_products] tr {
-    height: 30pt;
-    transition: 0.2s;
-}
-
-table[id=table_products] tr td {
-    border-bottom: 1pt #ffffff solid;
-    padding-right: 5pt
-
-}
-
-.not-available * {
-    color: gray;
-}
-
-.selected {
-    height: 40pt !important;
-}
-
-.selected td:first-child {
-    padding-left: 15pt;
+    height: 80px;
+    line-height : 80px;
+    font-size: 60px;
+    background: red;
+    font-family: monospace;
 }

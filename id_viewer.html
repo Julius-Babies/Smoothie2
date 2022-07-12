@@ -1,5 +1,5 @@
 <html lang="de">
-<!-- Werbebilder müssen 1080px × 527px groß sein -->
+<!-- Werbebilder müssen 540x360px groß sein -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,20 +11,15 @@
 
     <link rel="stylesheet" href="css/ids.css" type="text/css">
 </head>
+
 <body onload="update()">
 <img alt="background" src="img/background.jpg" class="background">
 <div class="content">
     <div class="id_viewer" id="id_viewer"></div>
     <div class="ads" id="ads">
-        <div id="ads.products">
-            <div>Unser Angebot<br>
-
-                <table id="table_products">
-                </table>
-            </div>
-        </div>
-        <div id="ads.ads">Werbung</div>
+        <div id="video" style="transition: 0.3s; position: fixed; left: 0"><h1 style="text-align: center">Unser Angebot:</h1><hr><video src="./imgassets/ads.mp4" style="width: 1080px; aspect-ratio: 16 / 9;" autoplay loop></video></div>
     </div>
+    <div class="info" id="info"></div>;
 </div>
 </body>
 </html>
