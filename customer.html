@@ -9,35 +9,40 @@
     <script type="module">
         import {initPage, initialize_cashpoint} from "./js/customer.js";
 
-        document.querySelector("body").onload = function () { initPage(); };
-        document.getElementById("input_select_cashpoint_id").onchange = function () { initialize_cashpoint(); };
+        let body = document.querySelector("body");
+        body.onload = function () { initPage(); };
+        body.requestFullscreen();
+        body.webkitRequestFullscreen();
+        document.getElementById("input_select_cashpoint_id").onchange = function () { initialize_cashpoint(); DoFullScreen(); };
     </script>
 
     <link rel="stylesheet" href="css/customer.css">
 </head>
 <body>
 
-<div id="div_select_cashpoint">
+<div id="body_content">
+    <div id="div_select_cashpoint">
 
-    <!-- Select cashpoint -->
-    <label for="input_select_cashpoint_id">Kassen-ID</label><select id="input_select_cashpoint_id">
-    <option value="" selected hidden disabled>Kasse wählen</option>
-    <option>1</option>
-    <option>2</option>
-</select>
+        <!-- Select cashpoint -->
+        <label for="input_select_cashpoint_id">Kassen-ID</label><select id="input_select_cashpoint_id">
+        <option value="" selected hidden disabled>Kasse wählen</option>
+        <option>1</option>
+        <option>2</option>
+    </select>
 
-</div>
+    </div>
 
-<div id="div_cashpoint_content">
-    <img alt="Background" src="./img/background.jpg" class="background">
-    <div class="top"><span id="header"></span></div>
-    <div class="content" id="content"></div>
-    <div class="footer"><span id="footer"></span></div>
-    <video src="imgassets/ads.mp4" class="div_cashpoint_customer_info video" autoplay loop></video>
-</div>
+    <div id="div_cashpoint_content">
+        <img alt="Background" src="./img/background.jpg" class="background">
+        <div class="top"><span id="header"></span></div>
+        <div class="content" id="content"></div>
+        <div class="footer"><span id="footer"></span></div>
+        <video src="imgassets/ads.mp4" class="div_cashpoint_customer_info video" autoplay loop></video>
+    </div>
 
-<div class="div_cashpoint_customer_info" style="opacity: 0">
-    <div id="div_cashpoint_customer_info">Moin</div>
+    <div class="div_cashpoint_customer_info" style="opacity: 0">
+        <div id="div_cashpoint_customer_info">Moin</div>
+    </div>
 </div>
 
 </body>
