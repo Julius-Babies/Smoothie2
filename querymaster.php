@@ -10,7 +10,6 @@ function stringStartsWith($haystack, $needle, $case = true): bool
 }
 
 $type = $_POST["type"];
-$sql = $_POST["query"];
 $data = $_POST["data"];
 if ($type === "id_viewer.get_ids") {
     $sql = "SELECT id, status FROM smoothie2.orders ORDER BY change_time";

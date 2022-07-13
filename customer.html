@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Kundenansicht</title>
 
     <script type="module">
@@ -11,9 +12,10 @@
 
         let body = document.querySelector("body");
         body.onload = function () { initPage(); };
-        body.requestFullscreen();
 
-        document.getElementById("input_select_cashpoint_id").onchange = function () { initialize_cashpoint(); };
+        document.getElementById("start").onclick = function () {
+            initialize_cashpoint();
+        };
     </script>
 
     <link rel="stylesheet" href="css/customer.css">
@@ -29,15 +31,16 @@
         <option>1</option>
         <option>2</option>
     </select>
+        <button id="start">Start</button>
 
     </div>
 
     <div id="div_cashpoint_content">
         <img alt="Background" src="./img/background.jpg" class="background">
-        <div class="top"><span id="header"></span></div>
+        <div class="top" id="header"><span id="header_span"></span></div>
         <div class="content" id="content"></div>
-        <div class="footer"><span id="footer"></span></div>
-        <video src="imgassets/ads.mp4" class="div_cashpoint_customer_info video" autoplay loop></video>
+        <div class="footer"><span id="footer_span"></span></div>
+        <video src="imgassets/ads.mp4" id="video" class="div_cashpoint_customer_info video" autoplay loop></video>
     </div>
 
     <div class="div_cashpoint_customer_info" style="opacity: 0">

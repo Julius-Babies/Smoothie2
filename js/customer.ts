@@ -1,4 +1,17 @@
-import {addLeadingZeros, getCookie, query, setCookie} from "./tools.js";
+import {addLeadingZeros, getCookie, query, readTextFile, setCookie} from "./tools.js";
+
+interface HTMLElement2 extends HTMLElement {
+    alt:string
+}
+
+interface Smoothie2Config extends Object {
+    customer:Smoothie2Config_customer
+}
+
+interface Smoothie2Config_customer extends Object {
+    header:boolean,
+    footer_default:string
+}
 
 export function initPage() {
     // show cashpoint selector
@@ -9,13 +22,12 @@ export function initPage() {
 function updateHeader() {
     setTimeout(function () {
         let currentDate = new Date();
-        document.getElementById("header").innerText = "Kasse " + getCookie("cashpoint_customer") + " • " + currentDate.getDate() + "." + addLeadingZeros((currentDate.getMonth() + 1), 2) + "." + currentDate.getFullYear() + " • " + addLeadingZeros(currentDate.getHours(), 2) + ":" + addLeadingZeros(currentDate.getMinutes(), 2);
+        document.getElementById("header_span").innerText = "Kasse " + getCookie("cashpoint_customer") + " • " + currentDate.getDate() + "." + addLeadingZeros((currentDate.getMonth() + 1), 2) + "." + currentDate.getFullYear() + " • " + addLeadingZeros(currentDate.getHours(), 2) + ":" + addLeadingZeros(currentDate.getMinutes(), 2);
         updateHeader();
     }, 1000);
 }
 
 export function initialize_cashpoint() {
-
     // show cashpoint data
 
     document.getElementById("div_select_cashpoint").style.display = "none";
@@ -25,12 +37,27 @@ export function initialize_cashpoint() {
     const cashpoint = (<HTMLInputElement>document.getElementById("input_select_cashpoint_id")).value.toString();
     setCookie("cashpoint_customer", cashpoint, 1);
 
+    let JSONData:Smoothie2Config;
+
+    readTextFile("./config.json", function (text) {
+        JSONData = JSON.parse(text);
+        if (JSONData.customer.header) {
+            (<HTMLElement>document.getElementById("header")).style.visibility = "visible";
+        } else {
+            (<HTMLElement>document.getElementById("header")).style.visibility = "hidden";
+            document.getElementById("video").style.removeProperty("height");
+            document.getElementById("video").style.aspectRatio = "16 / 9";
+        }
+        (<HTMLElement2>document.getElementById("footer_span")).alt = JSONData.customer.footer_default;
+    });
+
     updateHeader();
     update();
 }
 
 function update() {
     setTimeout(function () {
+
         let message = query("customer.get_messages", getCookie("cashpoint_customer"));
         if (message !== "EMPTY") {
             query("customer.delete_message", message.split(";")[0]);
@@ -68,7 +95,7 @@ function update() {
         html = html + "<tr class='invisible_row'><td></td><td></td><td></td></tr>"
         html = html + "</table>";
         if (orderlist.length === 1) { // Element 0 is always "EMPTY" or the first value
-            document.getElementById("footer").innerHTML = "Herzlich willkommen!";
+            document.getElementById("footer_span").innerHTML = (<HTMLElement2>document.getElementById("footer_span")).alt;
             document.getElementById("content").innerHTML = "";
             document.querySelector("video").style.display = "block";
         } else {
@@ -77,7 +104,7 @@ function update() {
             if (content_before !== document.getElementById("content").innerHTML) {
                 document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
             }
-            document.getElementById("footer").innerHTML = "Gesamt: " + ((total / 100)+cups).toFixed(2) + " €";
+            document.getElementById("footer_span").innerHTML = "Gesamt: " + ((total / 100)+cups).toFixed(2) + " €";
         }
 
         update();

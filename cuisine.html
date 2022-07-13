@@ -13,11 +13,16 @@
 </head>
 <body>
 
+<button id="start">Start</button>
+
     <h1>Lade Bestellungen</h1>
 
 </body>
 <script type="module">
     import {update} from "./js/cuisine.js";
-    document.querySelector("body").onload = function () { update(); };
+    document.getElementById("start").addEventListener("click", function () {
+        document.documentElement.requestFullscreen();
+        update();
+    });
 </script>
 </html>

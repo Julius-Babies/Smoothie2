@@ -3,7 +3,7 @@ body {
     padding: 0;
     overflow: hidden;
     color: white;
-    font-family: Arial, "sans-serif";
+    font-family: Arial, "Arial MT", "serif";
 }
 
 body * {
@@ -150,6 +150,7 @@ th[id=header_temp_total] {
 }
 
 .video {
+    z-index: 2;
     background: rgba(255, 255, 255, 0);
 }
 
