@@ -1,37 +1,55 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui" />
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1, minimum-scale=1.0, maximum-scale=1.0, minimal-ui"/>
+    <meta name="apple-mobile-web-app-capable" content="yes">
     <title>Kundenansicht</title>
 
-    <script src="js/jquery.js" type="text/javascript"></script>
-    <script src="js/tools.js" type="text/javascript"></script>
-    <script src="js/customer.js" type="text/javascript"></script>
+    <script type="module">
+        import {initialize_cashpoint, initPage} from "./js/customer.js";
+
+        let body = document.querySelector("body");
+        body.onload = function () {
+            initPage();
+        };
+
+        document.getElementById("start").onclick = function () {
+            initialize_cashpoint();
+        };
+    </script>
 
     <link rel="stylesheet" href="css/customer.css">
 </head>
-<body onload="initPage()">
+<body>
 
-<div id="div_select_cashpoint">
-
-    <!-- Select cashpoint -->
-    <label for="input_select_cashpoint_id">Kassen-ID</label><select onchange="initialize_cashpoint()" id="input_select_cashpoint_id">
+<!-- select cashpoint -->
+<label class="select_cashpoint" for="input_select_cashpoint_id">Kassen-ID</label>
+<select class="select_cashpoint" id="input_select_cashpoint_id">
     <option value="" selected hidden disabled>Kasse wählen</option>
     <option>1</option>
     <option>2</option>
 </select>
+<button class="select_cashpoint" id="start">Start</button>
 
-</div>
-
-<div id="div_cashpoint_content">
+<div id="div_cashpoint_content" class="cashpoint_data">
     <img alt="Background" src="./img/background.jpg" class="background">
-    <div class="top"><span id="header"></span></div>
+    <div class="header" id="header"><span id="header_span"></span></div>
     <div class="content" id="content"></div>
-    <div class="footer"><span id="footer"></span></div>
+    <div class="footer">
+        <div style="width: 100%; text-align: center">
+            <span id="footer_span_de" style="font-size: 25pt"></span>
+            <br><span id="footer_span_uk" style="font-size: 15pt"></span>
+        </div>
+    </div>
 </div>
 
-<div class="div_cashpoint_customer_info" style="opacity: 0">
+<video src="imgassets/ads.mp4" id="video" class="floating_centered cashpoint_customer_video cashpoint_data" autoplay
+       loop></video>
+
+<div class="div_cashpoint_customer_info floating_centered cashpoint_data" style="opacity: 0">
     <div id="div_cashpoint_customer_info">Moin</div>
 </div>
 

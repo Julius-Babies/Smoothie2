@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="de">
 <head>
     <meta charset="UTF-8">
@@ -51,12 +52,12 @@
     $endHour = $_GET["endhour"];
 
     $conn = new mysqli("localhost", "webserver", "cloudiaserver");
-    $result = $conn->query("SELECT name, SUM(price * od.amount) AS money, SUM(amount) AS amount FROM smoothie2.products LEFT JOIN smoothie2.order_details od on products.id = od.product_id LEFT OUTER JOIN smoothie2.orders o on o.id = od.order_id WHERE HOUR(create_time) < $endHour AND HOUR(create_time) >= $startHour AND YEAR(create_time) = $year AND MONTH(create_time) = $month AND DAY(create_time) = $day GROUP BY name");
+    $result = $conn->query("SELECT name_de, SUM(price * od.amount) AS money, SUM(amount) AS amount FROM smoothie2.products LEFT JOIN smoothie2.order_details od on products.id = od.product_id LEFT OUTER JOIN smoothie2.orders o on o.id = od.order_id WHERE HOUR(create_time) < $endHour AND HOUR(create_time) >= $startHour AND YEAR(create_time) = $year AND MONTH(create_time) = $month AND DAY(create_time) = $day GROUP BY name_de");
     while ($row = mysqli_fetch_assoc($result)) {
         $money_sum += $row["money"];
         $smoothie_sum += $row["amount"];
         $money = number_format($row["money"] / 100, 2, ",", ".");
-        echo "<tr><td>$row[name]</td><td>$row[amount]</td><td>$money €</td><td><img src='img/bar.png' width='$row[amount]' height='20px' alt='Bar'></td></tr>";
+        echo "<tr><td>$row[name_de]</td><td>$row[amount]</td><td>$money €</td><td><img src='img/bar.png' width='$row[amount]' height='20px' alt='Bar'></td></tr>";
     }
     $money_sum = number_format($money_sum / 100, 2, ",", ".");
     echo "<tr><th colspan='4'>Gesamt: $money_sum € ($smoothie_sum Smoothies verkauft)</th></tr>";

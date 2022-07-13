@@ -1,36 +1,88 @@
-function update(recursion = true) {
+import { query } from "./tools.js";
+export function update(recursion = true) {
     setTimeout(function () {
-        const data = query("cuisine.get_orders").split("\n");
-        let html = "<table style='table-layout: fixed; border-collapse: collapse'><tr><th style='width: 100px'>Bestell-ID</th><th style='width: 800px'>Bestellung</th><th style='width: 300px;'>Datum</th><th style='width: 300px;'>Schließen</th></tr>";
-        data.forEach(function (item) {
+        const rawData = query("cuisine.get_orders").split("\n");
+        let mainTable = document.createElement("table");
+        mainTable.style.tableLayout = "fixed";
+        mainTable.style.borderCollapse = "collapse";
+        let mainTableHeader = document.createElement("tr");
+        let tableHead = document.createElement("th");
+        tableHead.style.width = "100px";
+        tableHead.innerText = "Bestell-ID";
+        mainTableHeader.appendChild(tableHead);
+        tableHead = document.createElement("th");
+        tableHead.style.width = "800px";
+        tableHead.innerText = "Bestellung";
+        mainTableHeader.appendChild(tableHead);
+        tableHead = document.createElement("th");
+        tableHead.style.width = "300px";
+        tableHead.innerText = "Datum";
+        mainTableHeader.appendChild(tableHead);
+        tableHead = document.createElement("th");
+        tableHead.style.width = "300px";
+        tableHead.innerText = "Schließen";
+        mainTableHeader.appendChild(tableHead);
+        mainTable.appendChild(mainTableHeader);
+        rawData.forEach(function (item) {
             if (item !== "" && item !== "EMPTY") {
-                let order_data = item.split(";");
-                if (order_data[2]  === "1") {
-                    html = html + "<tr style='background: lawngreen'><td>" + order_data[0] + "</td>";
-                } else {
-                    html = html + "<tr><td>" + order_data[0] + "</td>";
+                let orderData = item.split(";");
+                let row = document.createElement("tr");
+                if (orderData[2] === "1") {
+                    row.style.background = "lawngreen";
                 }
-
-                const order_components = query("cuisine.get_order_details", order_data[0]).split("\n");
-                let table = "<table>";
-                order_components.forEach(function (item) {
+                let id = document.createElement("td");
+                id.innerText = orderData[0];
+                row.appendChild(id);
+                const orderComponents = query("cuisine.get_order_details", orderData[0]).split("\n");
+                let orderComponentTable = document.createElement("table");
+                orderComponents.forEach(function (item) {
                     if (item !== "") {
-                        const order_component = item.split(";");
-                        table = `${table}<tr><td>${order_component[0]}</td><td>${order_component[1]}</td></tr>`
+                        const orderComponent = item.split(";");
+                        let orderRow = document.createElement("tr");
+                        let cell = document.createElement("td");
+                        cell.innerText = orderComponent[0];
+                        orderRow.appendChild(cell);
+                        cell = document.createElement("td");
+                        cell.innerText = orderComponent[1];
+                        orderRow.appendChild(cell);
+                        orderComponentTable.appendChild(orderRow);
                     }
                 });
-                table = table + "</table>";
-                if (order_data[2] === "0") {
-                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td id="${order_data[0]}" onclick='query("cuisine.update_status", "${order_data[0]};1"); document.getElementById("${order_data[0]}").innerText = "Bitte warten..."'>Fertig</td></tr>`
-                } else {
-                    html = `${html}<td>${table}</td><td>${order_data[1]}</td><td  id="${order_data[0]}" onclick='query("cuisine.update_status", "${order_data[0]};2"); document.getElementById("${order_data[0]}").innerText = "Bitte warten..."'>Ausgegeben!</td></tr>`
+                let mainTableOrderData = document.createElement("td");
+                mainTableOrderData.appendChild(orderComponentTable);
+                row.appendChild(mainTableOrderData);
+                let orderDate = document.createElement("td");
+                orderDate.innerText = orderData[1];
+                row.appendChild(orderDate);
+                let orderAction = document.createElement("td");
+                if (orderData[2] === "0") {
+                    orderAction.innerText = "Fertig";
                 }
+                else {
+                    orderAction.innerText = "Ausgegeben";
+                }
+                orderAction.classList.add("order_action");
+                orderAction.id = "order_action_" + orderData[0];
+                row.appendChild(orderAction);
+                mainTable.appendChild(row);
             }
         });
-        html = html + "</table>";
-        document.getElementById("body").innerHTML = html;
+        document.querySelector("body").innerHTML = mainTable.outerHTML;
+        let buttons = document.getElementsByClassName("order_action");
+        for (let i = 0; i < buttons.length; i++) {
+            buttons.item(i).onclick = function () {
+                if (buttons.item(i).innerText == "Fertig") {
+                    query("cuisine.update_status", `${buttons.item(i).id.split("_")[2]};1`);
+                }
+                else {
+                    query("cuisine.update_status", `${buttons.item(i).id.split("_")[2]};2`);
+                }
+                buttons.item(i).innerText = "Bitte warten...";
+            };
+        }
         if (recursion) {
             update();
         }
-    }, 3000)
+    }, 3000);
 }
+//# sourceMappingURL=cuisine.js.map

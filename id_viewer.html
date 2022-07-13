@@ -1,23 +1,29 @@
+<!DOCTYPE html>
 <html lang="de">
 <!-- Werbebilder müssen 540x360px groß sein -->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ID-Übersicht</title>
-    <script src="js/jquery.js" rel="script" type="text/javascript"></script>
-    <script src="js/tools.js" rel="script" type="text/javascript"></script>
-    <script src="js/ids.js" rel="script" type="text/javascript"></script>
-
     <link rel="stylesheet" href="css/ids.css" type="text/css">
+    <title>ID-Übersicht</title>
+
+    <script type="module">
+        import {update} from "./js/ids.js";
+        import {initPage} from "./js/ids";
+        document.querySelector("body").onload = function () {
+            initPage();
+            update();
+        };
+    </script>
 </head>
 
-<body onload="update()">
-<img alt="background" src="img/background.jpg" class="background">
+<body>
+<img alt="background" src="img/background.jpg" class="background" style="height: 1920px">
 <div class="content">
     <div class="id_viewer" id="id_viewer"></div>
     <div class="ads" id="ads">
-        <div id="video" style="transition: 0.3s; position: fixed; left: 0"><h1 style="text-align: center">Unser Angebot:</h1><hr><video src="./imgassets/ads.mp4" style="width: 1080px; aspect-ratio: 16 / 9;" autoplay loop></video></div>
+        <div id="video" style="transition: 0.3s; position: fixed; left: 0"><div style="text-align: center; display: block" id="our_menu"></div><video id="video_tag" src="./imgassets/ads.mp4" style="width: 1080px; aspect-ratio: 16 / 9;" autoplay loop></video></div>
     </div>
     <div class="info" id="info"></div>;
 </div>

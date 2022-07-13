@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="@192.168.3.100" uuid="f938cb8c-452e-4ca5-ad00-8a7b0c4f24d4">
-      <driver-ref>mariadb</driver-ref>
-      <synchronize>true</synchronize>
-      <jdbc-driver>org.mariadb.jdbc.Driver</jdbc-driver>
-      <jdbc-url>jdbc:mariadb://192.168.3.100:3306</jdbc-url>
-      <working-dir>$ProjectFileDir$</working-dir>
-    </data-source>
     <data-source source="LOCAL" name="@amnesix" uuid="4773823f-ae29-4875-88b5-8091ba0b1d3d">
       <driver-ref>mariadb</driver-ref>
       <synchronize>true</synchronize>
