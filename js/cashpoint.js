@@ -1,4 +1,4 @@
-import { query, getCookie, setCookie, ajax } from "./tools.js";
+import { query, getCookie, setCookie, ajax, getTranslationOfID } from "./tools.js";
 var products_map = new Map();
 var given = "";
 var orderlist;
@@ -204,15 +204,20 @@ export function order() {
     // id info
     let paragraph = document.createElement("p");
     let heading1 = document.createElement("span");
-    heading1.innerText = "Ihre Bestell-ID:";
+    heading1.innerText = getTranslationOfID(3)[0];
+    heading1.style.fontSize = "74pt";
     paragraph.appendChild(heading1);
+    heading1 = document.createElement("span");
+    heading1.innerText = getTranslationOfID(3)[1];
+    heading1.style.fontSize = "35pt";
     paragraph.appendChild(document.createElement("br"));
+    paragraph.appendChild(heading1);
     paragraph.appendChild(document.createElement("br"));
     let id_div = document.createElement("span");
     id_div.innerText = id;
     id_div.classList.add("id");
     paragraph.appendChild(id_div);
-    query("cashpoint.insert_message", `${getCookie("cashpoint_staff")};${paragraph.outerHTML}`);
+    query("cashpoint.insert_message", `${getCookie("cashpoint_staff")};<p><span style="font-size: 74pt">${getTranslationOfID(3)[0]}</span><br><span style="font-size: 35pt">${getTranslationOfID(3)[1]}</span><br><span class="id">${id}</span>`);
     let total = 0;
     products_map.forEach(function (value, key) {
         if (value[2] !== 0) {

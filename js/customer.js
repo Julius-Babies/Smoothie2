@@ -1,8 +1,13 @@
-import { addLeadingZeros, getCookie, query, readTextFile, setCookie } from "./tools.js";
+import { addLeadingZeros, getCookie, getTranslationOfID, iterateTroughClass, query, readTextFile, setCookie } from "./tools.js";
 export function initPage() {
     // show cashpoint selector
-    document.getElementById("div_select_cashpoint").style.display = "block";
-    document.getElementById("div_cashpoint_content").style.display = "none";
+    iterateTroughClass("select_cashpoint", function (element) {
+        element.style.display = "inline-block";
+    });
+    // hide cashpoint stuff
+    iterateTroughClass("cashpoint_data", function (element) {
+        element.style.display = "none";
+    });
 }
 function updateHeader() {
     setTimeout(function () {
@@ -12,9 +17,14 @@ function updateHeader() {
     }, 1000);
 }
 export function initialize_cashpoint() {
+    // hide cashpoint select
+    iterateTroughClass("select_cashpoint", function (element) {
+        element.style.display = "none";
+    });
     // show cashpoint data
-    document.getElementById("div_select_cashpoint").style.display = "none";
-    document.getElementById("div_cashpoint_content").style.display = "block";
+    iterateTroughClass("cashpoint_data", function (element) {
+        element.style.display = "inline-block";
+    });
     // get cashpoint data
     const cashpoint = document.getElementById("input_select_cashpoint_id").value.toString();
     setCookie("cashpoint_customer", cashpoint, 1);
@@ -22,16 +32,21 @@ export function initialize_cashpoint() {
     readTextFile("./config.json", function (text) {
         JSONData = JSON.parse(text);
         if (JSONData.customer.header) {
-            document.getElementById("header").style.visibility = "visible";
+            document.getElementById("header").style.display = "table";
+            updateHeader();
         }
         else {
-            document.getElementById("header").style.visibility = "hidden";
+            document.getElementById("header").style.display = "none";
             document.getElementById("video").style.removeProperty("height");
             document.getElementById("video").style.aspectRatio = "16 / 9";
         }
-        document.getElementById("footer_span").alt = JSONData.customer.footer_default;
+        if (JSONData.enable_uk_video) {
+            document.getElementById("video").src = "./imgassets/ads_uk.mp4";
+        }
+        else {
+            document.getElementById("video").src = "./imgassets/ads.mp4";
+        }
     });
-    updateHeader();
     update();
 }
 function update() {
@@ -56,7 +71,7 @@ function update() {
         const orderlist = query("customer.live_orders", getCookie("cashpoint_customer")).split("\n");
         let total = 0;
         let cups = 0;
-        let html = "<table class='live_order'><tr><th id='header_name'>Name</th><th id='header_amount'>Anzahl</th><th id='header_temp_total'>Zwischensumme</th></tr>";
+        let html = "<table class='live_order'>";
         orderlist.forEach(function (item) {
             if (item.replaceAll(";", "") !== "" && item !== "EMPTY") {
                 item = item.split(";");
@@ -69,11 +84,12 @@ function update() {
             }
         });
         if (total)
-            html = `${html}<tr style="border-top: 3pt double #ffffff"><td>Pfand (1€ pro Becher) </td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`;
+            html = `${html}<tr style="border-top: 3pt double #ffffff"><td><span>${getTranslationOfID(2)[0]}</span><br><span style="font-size: 15pt">${getTranslationOfID(2)[1]}</span> </td><td class="amount">${cups}</td><td>${cups}.00 €</td></tr>`;
         html = html + "<tr class='invisible_row'><td></td><td></td><td></td></tr>";
         html = html + "</table>";
         if (orderlist.length === 1) { // Element 0 is always "EMPTY" or the first value
-            document.getElementById("footer_span").innerHTML = document.getElementById("footer_span").alt;
+            document.getElementById("footer_span_de").innerHTML = getTranslationOfID(1)[0];
+            document.getElementById("footer_span_uk").innerHTML = getTranslationOfID(1)[1];
             document.getElementById("content").innerHTML = "";
             document.querySelector("video").style.display = "block";
         }
@@ -83,7 +99,8 @@ function update() {
             if (content_before !== document.getElementById("content").innerHTML) {
                 document.getElementById("content").scrollTop = document.getElementById("content").scrollHeight;
             }
-            document.getElementById("footer_span").innerHTML = "Gesamt: " + ((total / 100) + cups).toFixed(2) + " €";
+            document.getElementById("footer_span_de").innerHTML = `${getTranslationOfID(10)[0]}: ${((total / 100) + cups).toFixed(2)} €`;
+            document.getElementById("footer_span_uk").innerHTML = `${getTranslationOfID(10)[1]}: ${((total / 100) + cups).toFixed(2)} €`;
         }
         update();
     }, 250);

@@ -26,7 +26,7 @@ body {
     color: white;
 }
 
-table[id=table_ids] {
+table {
     width: 1080px;
     border-collapse: collapse;
     table-layout: fixed;

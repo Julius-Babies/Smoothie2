@@ -64,4 +64,13 @@ export function readTextFile(file, callback) {
     };
     rawFile.send(null);
 }
+export function iterateTroughClass(className, callback) {
+    let elements = document.getElementsByClassName(className);
+    for (let i = 0; i < elements.length; ++i) {
+        callback(elements.item(i));
+    }
+}
+export function getTranslationOfID(id) {
+    return query("system.translation", id).split(";");
+}
 //# sourceMappingURL=tools.js.map

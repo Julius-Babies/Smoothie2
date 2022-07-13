@@ -1,5 +1,7 @@
 // export for others scripts to use
 
+import {returnToOrderscreen} from "./cashpoint";
+
 export function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -72,4 +74,15 @@ export function readTextFile(file, callback) {
         }
     }
     rawFile.send(null);
+}
+
+export function iterateTroughClass(className, callback) {
+    let elements = document.getElementsByClassName(className);
+    for (let i = 0; i < elements.length; ++i) {
+        callback(<HTMLElement>elements.item(i));
+    }
+}
+
+export function getTranslationOfID(id) {
+    return query("system.translation", id).split(";");
 }

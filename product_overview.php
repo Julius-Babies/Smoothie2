@@ -11,7 +11,7 @@
 <body>
 <?php
 $conn = new mysqli("localhost", "webserver", "cloudiaserver");
-$result = $conn->query("SELECT smoothie2.products.name AS product_name, smoothie2.products.description AS product_description, smoothie2.products.price AS product_price, smoothie2.ingredients.name AS ingredient_name, smoothie2.ingredients.available AS ingredient_exists FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id LEFT JOIN smoothie2.ingredients ON ia.ingredient_id = ingredients.id");
+$result = $conn->query("SELECT smoothie2.products.name AS product_name, smoothie2.products.description AS product_description, smoothie2.products.price AS product_price, smoothie2.ingredients.name_de AS ingredient_name, smoothie2.ingredients.available AS ingredient_exists FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id LEFT JOIN smoothie2.ingredients ON ia.ingredient_id = ingredients.id");
 
 $product_data = array();
 

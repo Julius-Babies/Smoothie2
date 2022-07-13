@@ -1,6 +1,7 @@
 {
     "customer": {
         "header": false,
-        "footer_default": ""
-    }
+        "footer_default": "Herzlich willkommen"
+    },
+    "enable_uk_video": false
 }

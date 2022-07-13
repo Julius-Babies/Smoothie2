@@ -51,7 +51,8 @@ $conn->query("CREATE TABLE IF NOT EXISTS smoothie2.order_details (
 
 $conn->query("CREATE TABLE IF NOT EXISTS smoothie2.ingredients (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(32),
+    name_de VARCHAR(32),
+    name_uk VARCHAR(32),
     available BOOLEAN
 )");
 
@@ -68,4 +69,10 @@ $conn->query("CREATE TABLE IF NOT EXISTS smoothie2.customer_info (
     type INT,
     cashpoint INT,
     message TEXT
+)");
+
+$conn->query("CREATE TABLE IF NOT EXISTS smoothie2.translation_table (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    de TEXT,
+    uk TEXT
 )");

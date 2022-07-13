@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/ids.css" type="text/css">
     <title>ID-Übersicht</title>
 
     <script type="module">
         import {update} from "./js/ids.js";
-        document.querySelector("body").onload = function () { update(); };
+        import {initPage} from "./js/ids";
+        document.querySelector("body").onload = function () {
+            initPage();
+            update();
+        };
     </script>
-
-    <link rel="stylesheet" href="css/ids.css" type="text/css">
 </head>
 
 <body>
@@ -20,7 +23,7 @@
 <div class="content">
     <div class="id_viewer" id="id_viewer"></div>
     <div class="ads" id="ads">
-        <div id="video" style="transition: 0.3s; position: fixed; left: 0"><h1 style="text-align: center">Unser Angebot:</h1><video src="./imgassets/ads.mp4" style="width: 1080px; aspect-ratio: 16 / 9;" autoplay loop></video></div>
+        <div id="video" style="transition: 0.3s; position: fixed; left: 0"><div style="text-align: center; display: block" id="our_menu"></div><video id="video_tag" src="./imgassets/ads.mp4" style="width: 1080px; aspect-ratio: 16 / 9;" autoplay loop></video></div>
     </div>
     <div class="info" id="info"></div>;
 </div>
