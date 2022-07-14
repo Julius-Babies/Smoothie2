@@ -1,7 +1,3 @@
-// export for others scripts to use
-
-import {returnToOrderscreen} from "./cashpoint";
-
 export function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -59,8 +55,8 @@ export function ajax(url, method, data, async) {
         xhReq.setRequestHeader("X-Requested-With", "XMLHttpRequest");
         xhReq.send(null);
     }
+    console.log(xhReq.responseText);
     return xhReq.responseText;
-    //alert(serverResponse);
 }
 
 

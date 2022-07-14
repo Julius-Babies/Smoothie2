@@ -15,8 +15,8 @@ if ($type === "id_viewer.get_ids") {
     $sql = "SELECT id, status FROM smoothie2.orders ORDER BY change_time";
     $data = "id;status";
 } else if ($type === "id_viewer.get_products") {
-    $sql = "SELECT smoothie2.products.name  AS product_name, smoothie2.products.price AS product_price, MIN(i.available) AS ingredients_exists FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id LEFT JOIN smoothie2.ingredients i on i.id = ia.ingredient_id GROUP BY smoothie2.products.name";
-    $data = "product_name;product_price;ingredients_exists";
+    $sql = "SELECT smoothie2.products.name AS product_name, smoothie2.products.id AS product_id, smoothie2.products.price AS product_price, MIN(i.available) AS ingredients_exists FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ia on products.id = ia.product_id LEFT JOIN smoothie2.ingredients i on i.id = ia.ingredient_id GROUP BY smoothie2.products.name";
+    $data = "product_name;product_price;ingredients_exists;product_id";
 } else if ($type === "customer.get_messages") {
     $data = explode(";", $data);
     $sql = "SELECT id, type, message FROM smoothie2.customer_info WHERE cashpoint = $data[0]";
@@ -40,8 +40,8 @@ if ($type === "id_viewer.get_ids") {
     $data = explode(";", $data);
     $sql  = "UPDATE smoothie2.orders SET status = $data[1] WHERE id = $data[0]";
 } else if ($type === "cashpoint.get_products") {
-    $sql  = "SELECT smoothie2.products.name AS product_name, smoothie2.products.price AS product_price, MIN(smoothie2.ingredients.available) AS ingredients_exist FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ON products.id = ingredient_assign.product_id LEFT JOIN smoothie2.ingredients ON smoothie2.ingredients.id = smoothie2.ingredient_assign.ingredient_id GROUP BY smoothie2.products.name ORDER BY products.name";
-    $data = "product_name;product_price;ingredients_exist";
+    $sql  = "SELECT smoothie2.products.name AS product_name, smoothie2.products.id AS product_id, smoothie2.products.price AS product_price, MIN(smoothie2.ingredients.available) AS ingredients_exist FROM smoothie2.products LEFT JOIN smoothie2.ingredient_assign ON products.id = ingredient_assign.product_id LEFT JOIN smoothie2.ingredients ON smoothie2.ingredients.id = smoothie2.ingredient_assign.ingredient_id GROUP BY smoothie2.products.name ORDER BY products.name";
+    $data = "product_name;product_price;ingredients_exist;product_id";
 } else if ($type === "cashpoint.update_live_order") {
     $data = explode(";", $data);
     $sql  = "UPDATE smoothie2.live_orders SET amount = $data[2] WHERE product_id = (SELECT id FROM smoothie2.products WHERE name = '$data[1]' LIMIT 1) AND cashpoint = $data[0]";

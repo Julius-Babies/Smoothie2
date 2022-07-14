@@ -35,7 +35,7 @@ Voraussetzung ist ein funktionierender Webserver mit PHP7 und MariaDB.
 | key                              | data_passed                             | data_returns                                                                   |
 |----------------------------------|-----------------------------------------|--------------------------------------------------------------------------------|
 | id_viewer.get_ids                |                                         | id;status                                                                      |
-| id_viewer.get_products           |                                         | product_name_de;product_name_uk;product_price;ingredients_exists               |
+| id_viewer.get_products           |                                         | product_name_de;product_name_uk;product_price;ingredients_exists;product_id    |
 | customer.get_messages            | [cashpoint_id]                          | id;type;message                                                                |
 | customer.delete_message          | [message_id]                            | /                                                                              |
 | customer.live_orders             | [cashpoint_id]                          | name_de;amount;price                                                           |
