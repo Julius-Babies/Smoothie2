@@ -26,8 +26,8 @@ export function initCashpoint() {
     product_list.forEach(function (item) {
         if (item !== "") {
             let current_product = item.split(";");
-            // key: name > value0 price; value1 available; value2 amount
-            products_map.set(current_product[0], [current_product[1], current_product[2], 0]);
+            // key: name > value0 price; value1 available; value2 amount; value3 id
+            products_map.set(current_product[0], [current_product[1], current_product[2], 0, current_product[3]]);
         }
     });
     updateUI();
@@ -50,7 +50,7 @@ function updateUI() {
         // span name
         let product_button_span_name = document.createElement("span");
         product_button_span_name.classList.add("name");
-        product_button_span_name.innerText = key;
+        product_button_span_name.innerText = "[" + value[3] + "] " + key;
         product_button.appendChild(product_button_span_name);
         // span price
         let product_button_span_price = document.createElement("span");
@@ -156,20 +156,20 @@ function updateLiveOrders() {
     });
 }
 function addProduct(name) {
-    products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], products_map.get(name)[2] + 1]);
+    products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], products_map.get(name)[2] + 1, products_map.get(name)[3]]);
     updateUI();
 }
 function removeProduct(e, name, deleteAll) {
     e.stopPropagation();
     if (deleteAll) {
-        products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], 0]);
+        products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], 0, products_map.get(name)[3]]);
     }
     else {
         if (products_map.get(name)[2] === 1 || products_map.get(name)[2] === 0) {
-            products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], 0]);
+            products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], 0, products_map.get(name)[3]]);
         }
         else {
-            products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], products_map.get(name)[2] - 1]);
+            products_map.set(name, [products_map.get(name)[0], products_map.get(name)[1], products_map.get(name)[2] - 1, products_map.get(name)[3]]);
         }
     }
     updateUI();
@@ -192,7 +192,7 @@ export function returnToOrderscreen() {
 function clearOrder() {
     if (confirm("Bist du sicher?")) {
         products_map.forEach(function (value, key) {
-            products_map.set(key, [value[0], value[1], 0]);
+            products_map.set(key, [value[0], value[1], 0, value[3]]);
         });
         given = "";
         initCashpoint();
